@@ -1,0 +1,31 @@
+<div class="container-fluid mt-5 contact-style" id="contactid">
+
+    <h1 class="text-center main-heading">Contact me</h1>
+    <p class="text-center sub-heading">Feel free to contact me via the following form...</p>
+    <div class="row">
+
+    </div>
+</div>
+
+<form class="container-fluid mt-5 text-center" method="post" action="/contact">
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Name</label>
+        <input type="name" class="form-control the-form " id="exampleFormControlInput1" placeholder="Full name"
+            name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Your Email Adress</label>
+        <input type="email" class="form-control the-form" id="exampleFormControlInput1" placeholder="name@example.com"
+            name="email" required>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Your message</label>
+        <textarea class="form-control  the-form" id="exampleFormControlTextarea1" rows="4" name="message"
+            required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-style">Submit</button>
+</form>
