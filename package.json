@@ -2,10 +2,11 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "This is my portofolio ver.1",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js -e js,hbs"
+    "dev": "nodemon src/app.js -e js,hbs",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
