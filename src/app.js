@@ -4,16 +4,16 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-// creating a database 
-mongoose.connect('mongodb+srv://admin:1234@cluster0.zp0il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('connected to the mongodb database');
-}).catch((err) => {
-    console.log(err);
-});
+// // creating a database 
+// mongoose.connect('mongodb+srv://admin:1234@cluster0.zp0il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//     useUnifiedTopology: true
+// }).then(() => {
+//     console.log('connected to the mongodb database');
+// }).catch((err) => {
+//     console.log(err);
+// });
 
 
 
