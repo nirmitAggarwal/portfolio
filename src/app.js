@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://Contacts:nirmit@cluster0.zr1tqhd.mongodb.net/?re
 }).catch((err) => {
     console.log(err);
 });
-
+console.log("just for the badge");
 
 
 // middleware 
