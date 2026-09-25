@@ -9,14 +9,23 @@ import { cn } from "@/lib/utils";
  * Floating split-pill navbar — two independent boxes, transparent between.
  * LEFT:  avatar (headphones on) + "New Delhi, India" — swaps to live
  *        local time on hover/focus, with a vertical text transition.
+ *        Touch devices can't hover, so the pill becomes tap-to-toggle.
  * RIGHT: Resume · LinkedIn · theme · Call.
  * Mobile: location pill + theme + menu (Resume/LinkedIn/Call in the sheet).
  */
 export function Navbar() {
   const [locationHover, setLocationHover] = useState(false);
+  const [timePinned, setTimePinned] = useState(false);
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const time = useLocalTime();
+
+  // Touch devices have no hover — the pill becomes tap-to-toggle instead.
+  const [canHover] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches
+  );
 
   // Close menu on Escape
   useEffect(() => {
@@ -26,13 +35,23 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const showTime = locationHover && time !== "";
+  const showTime =
+    ((canHover && locationHover) || (!canHover && timePinned)) && time !== "";
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
+    <div className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
+      {/* Tap-outside catcher for the mobile sheet (paints under the nav) */}
+      {open && (
+        <div
+          aria-hidden
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 sm:hidden"
+        />
+      )}
+
       <nav
         aria-label="Primary"
-        className="mx-auto flex max-w-6xl items-center justify-between gap-3"
+        className="mx-auto flex max-w-6xl items-center justify-between gap-2 sm:gap-3"
       >
         {/* — LEFT: location pill ------------------------------------------------ */}
         <button
@@ -40,13 +59,15 @@ export function Navbar() {
           aria-label={
             showTime
               ? `Local time in New Delhi: ${time}`
-              : "Location: New Delhi, India — hover or focus for local time"
+              : "Location: New Delhi, India — hover, focus or tap for local time"
           }
-          onMouseEnter={() => setLocationHover(true)}
-          onMouseLeave={() => setLocationHover(false)}
-          onFocus={() => setLocationHover(true)}
-          onBlur={() => setLocationHover(false)}
-          className="group flex h-14 items-center gap-3 rounded-xl border border-border bg-background/85 pl-3 pr-4 backdrop-blur-md transition-colors duration-200 hover:border-border-strong focus-visible:border-border-strong focus-visible:outline-none sm:h-16"
+          aria-pressed={canHover ? undefined : timePinned}
+          onMouseEnter={() => canHover && setLocationHover(true)}
+          onMouseLeave={() => canHover && setLocationHover(false)}
+          onFocus={() => canHover && setLocationHover(true)}
+          onBlur={() => canHover && setLocationHover(false)}
+          onClick={() => !canHover && setTimePinned((v) => !v)}
+          className="group flex h-12 select-none items-center gap-2 rounded-xl border border-border bg-background/85 pl-2 pr-3 backdrop-blur-md transition-colors duration-200 hover:border-border-strong focus-visible:border-border-strong focus-visible:outline-none sm:h-16 sm:gap-3 sm:pl-3 sm:pr-4"
         >
           <img
             src="/images/avatar-headphone-on.webp"
@@ -55,14 +76,14 @@ export function Navbar() {
             width={48}
             height={48}
             loading="eager"
-            className="size-10 rounded-lg border border-border object-cover object-top sm:size-12"
+            className="size-8 rounded-lg border border-border object-cover object-top sm:size-12"
           />
-          <span className="relative block h-5 overflow-hidden text-left">
-            {/* Two stacked rows slide vertically on hover/focus */}
+          <span className="relative block h-4 overflow-hidden text-left sm:h-5">
+            {/* Two stacked rows slide vertically on hover/focus/tap */}
             <span
               aria-hidden
               className={cn(
-                "block text-[0.9375rem] font-bold leading-5 transition-transform duration-300 ease-out",
+                "block text-[0.8125rem] font-bold leading-4 transition-transform duration-300 ease-out sm:text-[0.9375rem] sm:leading-5",
                 showTime ? "-translate-y-full" : "translate-y-0",
               )}
             >
@@ -71,7 +92,7 @@ export function Navbar() {
             <span
               aria-hidden
               className={cn(
-                "block font-mono text-[0.9375rem] leading-5 tabular-nums transition-transform duration-300 ease-out",
+                "block font-mono text-[0.8125rem] leading-4 tabular-nums transition-transform duration-300 ease-out sm:text-[0.9375rem] sm:leading-5",
                 showTime ? "-translate-y-full" : "translate-y-0",
               )}
             >
@@ -85,8 +106,8 @@ export function Navbar() {
         </button>
 
         {/* — RIGHT: controls (its own pill) ------------------------------------- */}
-        <div className="flex h-14 items-center gap-1 rounded-xl border border-border bg-background/85 px-2 backdrop-blur-md sm:h-16 sm:gap-1.5 sm:px-2.5">
-          {/* Resume */}
+        <div className="flex h-12 items-center gap-0.5 rounded-xl border border-border bg-background/85 px-1.5 backdrop-blur-md sm:h-16 sm:gap-1.5 sm:px-2.5">
+          {/* Resume — hidden on mobile, lives in the sheet */}
           <a
             href={site.resumeUrl}
             target="_blank"
@@ -96,7 +117,7 @@ export function Navbar() {
             Resume
           </a>
 
-          {/* LinkedIn */}
+          {/* LinkedIn — hidden on mobile, lives in the sheet */}
           <a
             href={site.linkedin}
             target="_blank"
@@ -112,7 +133,7 @@ export function Navbar() {
             onClick={toggle}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             title={theme === "dark" ? "Light mode" : "Dark mode"}
-            className="flex size-11 items-center justify-center rounded-lg text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground sm:size-12"
+            className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground sm:size-12"
           >
             {theme === "dark" ? (
               <Sun className="size-[1.1rem]" />
@@ -121,10 +142,10 @@ export function Navbar() {
             )}
           </button>
 
-          {/* Call — the prominent action */}
+          {/* Call — the prominent action (hidden on mobile, lives in the sheet) */}
           <a
             href={site.phoneHref}
-            className="ml-1 flex h-11 items-center gap-2 rounded-lg bg-primary px-4 text-[0.9375rem] font-bold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 sm:h-12 sm:px-5"
+            className="ml-1 hidden h-11 items-center gap-2 rounded-lg bg-primary px-4 text-[0.9375rem] font-bold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 sm:flex sm:h-12 sm:px-5"
           >
             <Phone className="size-4" aria-hidden />
             Call
@@ -137,7 +158,7 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="flex size-11 items-center justify-center rounded-lg text-foreground sm:hidden"
+            className="flex size-9 items-center justify-center rounded-lg text-foreground sm:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -148,7 +169,7 @@ export function Navbar() {
       <div
         id="mobile-menu"
         className={cn(
-          "mx-auto mt-2 max-w-6xl rounded-xl border border-border bg-background/95 p-2 backdrop-blur-md transition-all duration-300 sm:hidden",
+          "mx-auto mt-2 max-w-6xl rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur-md transition-all duration-300 sm:hidden",
           open ? "block opacity-100" : "hidden opacity-0",
         )}
       >

@@ -13,11 +13,15 @@ export function BuildingPhases() {
       <SectionHeading id="phases-heading">Building Phases</SectionHeading>
 
       <div
-        className="relative mt-10 w-full overflow-hidden rounded-2xl border border-border bg-black"
+        className="@container relative mt-10 w-full overflow-hidden rounded-2xl border border-border bg-black"
         onMouseLeave={() => setActive(null)}
       >
-        {/* Artwork */}
-        <div className="relative aspect-[16/9] min-h-[500px] w-full">
+        {/* Artwork — no min-height, so the 16:9 ratio holds at every width.
+            All overlay sizes use cqw (relative to this card's width) so mobile
+            renders a proportional miniature of the desktop layout instead of
+            reflowing to viewport breakpoints. max() floors keep things legible
+            on the narrowest phones. */}
+        <div className="relative aspect-[16/9] w-full">
           {/* Grayscale base image */}
           <img
             src={IMAGE_SRC}
@@ -79,21 +83,21 @@ export function BuildingPhases() {
                   {/* Phase content */}
                   <div
                     className={cn(
-                      "absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10",
+                      "absolute inset-x-0 bottom-0 p-[max(0.625rem,3.73cqw)]",
                       "translate-y-5 opacity-0 transition-all duration-500 ease-out",
                       isActive && "translate-y-0 opacity-100"
                     )}
                   >
                     {/* Phase number */}
-                    <div className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-white/60">
+                    <div className="mb-[max(0.25rem,1.12cqw)] text-[max(0.5rem,1.12cqw)] font-medium uppercase tracking-[0.25em] text-white/60">
                       0{index + 1}
                     </div>
 
-                    <h3 className="text-2xl font-semibold tracking-tight text-white md:text-3xl lg:text-4xl">
+                    <h3 className="text-[max(0.875rem,3.36cqw)] font-semibold tracking-tight text-white">
                       {phase.title}
                     </h3>
 
-                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/75 md:text-base">
+                    <p className="mt-[max(0.25rem,0.75cqw)] max-w-[35.8cqw] text-[max(0.625rem,1.49cqw)] leading-relaxed text-white/75">
                       {phase.description}
                     </p>
                   </div>
@@ -101,13 +105,13 @@ export function BuildingPhases() {
                   {/* Inactive phase label */}
                   <div
                     className={cn(
-                      "absolute left-5 top-5 transition-all duration-500 md:left-8 md:top-8",
+                      "absolute left-[max(0.625rem,2.99cqw)] top-[max(0.625rem,2.99cqw)] transition-all duration-500",
                       isActive
                         ? "translate-y-[-4px] opacity-0"
                         : "opacity-70"
                     )}
                   >
-                    <span className="text-xs font-medium uppercase tracking-[0.2em] text-white drop-shadow-md">
+                    <span className="text-[max(0.5rem,1.12cqw)] font-medium uppercase tracking-[0.2em] text-white drop-shadow-md">
                       {phase.title}
                     </span>
                   </div>
@@ -123,7 +127,7 @@ export function BuildingPhases() {
               active !== null ? "opacity-0" : "opacity-100"
             )}
           >
-            <div className="rounded-full border border-white/20 bg-black/20 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-white/70 backdrop-blur-sm">
+            <div className="rounded-full border border-white/20 bg-black/20 px-[max(0.625rem,1.87cqw)] py-[max(0.3125rem,0.93cqw)] text-[max(0.5rem,1.12cqw)] uppercase tracking-[0.2em] text-white/70 backdrop-blur-sm">
               Explore the process
             </div>
           </div>
@@ -143,10 +147,11 @@ export function BuildingPhases() {
                 )
               }
               className={cn(
-                "group flex items-center justify-center gap-2 px-4 py-4 text-xs uppercase tracking-[0.15em]",
+                "group flex items-center justify-center gap-1.5 px-2 py-3 text-[0.5625rem] uppercase tracking-[0.1em]",
                 "text-white/40 transition-colors duration-300",
                 "hover:text-white",
-                active === index && "text-white"
+                active === index && "text-white",
+                "sm:gap-2 sm:px-4 sm:py-4 sm:text-xs sm:tracking-[0.15em]"
               )}
             >
               <span
@@ -155,7 +160,9 @@ export function BuildingPhases() {
                   active === index && "scale-125 bg-white"
                 )}
               />
-              {phase.title}
+              {/* Short label fits the narrow columns on mobile */}
+              <span className="sm:hidden">{phase.label}</span>
+              <span className="hidden sm:inline">{phase.title}</span>
             </button>
           ))}
         </div>

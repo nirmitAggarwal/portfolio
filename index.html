@@ -12,13 +12,10 @@
     <title>Nirmit Aggarwal — Software Engineer in Progress</title>
     <script>
       // Set theme before paint to avoid a flash of the wrong scheme.
+      // Default is LIGHT; dark only applies when explicitly stored.
       (function () {
         try {
-          var t = localStorage.getItem("theme");
-          if (
-            t === "dark" ||
-            (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
-          ) {
+          if (localStorage.getItem("theme") === "dark") {
             document.documentElement.classList.add("dark");
           }
         } catch (e) {}

@@ -7,13 +7,10 @@ function apply(theme: Theme) {
   document.documentElement.classList.toggle("dark", theme === "dark");
 }
 
-/** Read the stored theme, falling back to the OS preference. */
+/** Read the stored theme, falling back to light (site default). */
 export function getStoredTheme(): Theme {
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return stored === "dark" ? "dark" : "light";
 }
 
 /** Set + persist the theme. */
