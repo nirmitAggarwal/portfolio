@@ -1,0 +1,14 @@
+{
+  "main-website-colors": {
+    "colors": ["#fefefe", "#262626", "#777777", "#bcbcbc", "#fd4d25"]
+  },
+  "Median cut": {
+    "colors": ["#353534", "#eae8e6", "#888888", "#996355", "#e4874e"]
+  },
+  "Material Design": {
+    "colors": ["#f7894a", "#4f4d4a", "#2c4760", "#6c6b69", "#f8572f"]
+  },
+  "visible css": {
+    "colors": ["#262626", "#ffffff", "#0f0f0f", "#ededed", "#2b2620", "#4a4238", "#f3e3cf", "#acacac", "#313336", "#f0a45c"]
+  }
+}

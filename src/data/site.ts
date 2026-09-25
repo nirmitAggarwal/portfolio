@@ -1,0 +1,19 @@
+export const site = {
+  name: "Nirmit Aggarwal",
+  shortName: "Nirmit",
+  role: "Software Engineer in Progress",
+  tagline: "I build software to understand how things work.",
+  description:
+    "B.Tech Information Technology student at Maharaja Surajmal Institute of Technology, learning aggressively and building seriously — distributed systems, Rust, backend infrastructure.",
+  email: "nirmitjee@gmail.com",
+  phone: "+91 98911 68827",
+  phoneHref: "tel:+919891168827",
+  github: "https://github.com/nirmitAggarwal",
+  githubHandle: "nirmitAggarwal",
+  linkedin: "https://linkedin.com/in/nirmit-aggarwal",
+  linkedinHandle: "in/nirmit-aggarwal",
+  college: "Maharaja Surajmal Institute of Technology",
+  degree: "B.Tech Information Technology",
+  years: "2025–2029",
+  resumeUrl: "/resume.pdf",
+} as const;

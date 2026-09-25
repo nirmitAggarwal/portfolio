@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Nirmit Aggarwal — software engineer in progress. I build software to understand how things work: distributed systems, Rust, backend infrastructure."
+    />
+    <meta name="theme-color" content="#fefefe" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <title>Nirmit Aggarwal — Software Engineer in Progress</title>
+    <script>
+      // Set theme before paint to avoid a flash of the wrong scheme.
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (
+            t === "dark" ||
+            (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,318 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   FONTS
+   - Recoleta      → expressive display serif (large headings, editorial moments)
+   - Caviar Dreams → geometric humanist sans (body, nav, interface)
+   - Svetze        → experimental display accent (tiny labels, ticker, mono-ish role)
+---------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Recoleta";
+  src: url("/fonts/recoleta/Recoleta-RegularDEMO.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Caviar Dreams";
+  src: url("/fonts/caviar_dreams/CaviarDreams.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caviar Dreams";
+  src: url("/fonts/caviar_dreams/CaviarDreams_Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caviar Dreams";
+  src: url("/fonts/caviar_dreams/CaviarDreams_Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Caviar Dreams";
+  src: url("/fonts/caviar_dreams/CaviarDreams_BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Svetze";
+  src: url("/fonts/svetze/Svetze.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----------------------------------------------------------------------------
+   DESIGN TOKENS  (foundation: resources/color_pallete.json)
+   paper #fefefe · ink #262626 · gray #777777 · silver #bcbcbc · accent #fd4d25
+   warm support tones from the "visible css" set: #f3e3cf / #2b2620 / #4a4238
+---------------------------------------------------------------------------- */
+:root {
+  --background: #fefefe;
+  --foreground: #262626;
+  --muted: #f4f2ee;
+  --muted-foreground: #777777;
+  --primary: #fd4d25;
+  --primary-foreground: #fefefe;
+  --accent: #fd4d25;
+  --accent-soft: #fdeae4;
+  --border: #e8e5e0;
+  --border-strong: #d6d2cb;
+  --surface: #ffffff;
+  --surface-warm: #f8f5ef;
+  --ink-soft: #4a4a4a;
+
+  /* Type */
+  --font-display: "Recoleta", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Caviar Dreams", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-label: "Svetze", "Caviar Dreams", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-base: 420ms;
+}
+
+/* Dark mode: warm dark paper, not pure black. Same hue family as light mode.
+   Toggled via `.dark` on <html> (see lib/theme.ts + inline init in index.html). */
+.dark {
+  --background: #161514;
+  --foreground: #ece8e2;
+  --muted: #1f1d1b;
+  --muted-foreground: #9b958d;
+  --primary: #ff6a45;
+  --primary-foreground: #1a0d08;
+  --accent: #ff6a45;
+  --accent-soft: #33201a;
+  --border: #2b2825;
+  --border-strong: #3a3632;
+  --surface: #1c1a18;
+  --surface-warm: #201d1a;
+  --ink-soft: #c4beb5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-surface: var(--surface);
+  --color-surface-warm: var(--surface-warm);
+  --color-ink-soft: var(--ink-soft);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-label: var(--font-label);
+  --font-mono: var(--font-mono);
+}
+
+/* ----------------------------------------------------------------------------
+   BASE
+---------------------------------------------------------------------------- */
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-padding-top: 6rem;
+  background-color: var(--background);
+}
+
+body {
+  background-color: transparent;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/*
+ * Dot grid page background — fixed layer behind all content.
+ * (html carries the page color so this negative-z layer stays visible.)
+ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--foreground) 15%, transparent) 1px,
+    transparent 1.4px
+  );
+  background-size: 26px 26px;
+}
+
+/* ----------------------------------------------------------------------------
+   SHOOTING STARS (hero only)
+---------------------------------------------------------------------------- */
+.shooting-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(to right, transparent, rgba(253, 77, 37, 0.9));
+  opacity: 0;
+  animation: shoot var(--duration, 9s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(145deg) scaleX(0.3);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  16% {
+    transform: translate3d(-640px, 448px, 0) rotate(145deg) scaleX(1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-640px, 448px, 0) rotate(145deg) scaleX(1);
+    opacity: 0;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--primary-foreground);
+}
+
+/* Keyboard focus — always visible, never sacrificed for design */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Thin, quiet scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ----------------------------------------------------------------------------
+   TYPOGRAPHY UTILITIES
+---------------------------------------------------------------------------- */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* Svetze is decorative: tiny uppercase labels with tracking */
+@utility font-label {
+  font-family: var(--font-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------------
+   MOTION SYSTEM — subtle entrance reveal, driven by a tiny IntersectionObserver
+---------------------------------------------------------------------------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: rise-in var(--duration-base) var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--reveal-delay, 0) * 80ms);
+}
+
+/* Media (lazy images, artwork) gets its own soft reveal */
+.reveal-media {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms var(--ease-out-expo);
+  transition-delay: calc(var(--reveal-delay, 0) * 90ms);
+}
+
+.reveal-media.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Link underline sweep — quiet, editorial */
+.link-sweep {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 320ms var(--ease-out-expo);
+}
+.link-sweep:hover,
+.link-sweep:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Reduced motion: everything readable with animations disabled */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    animation: none !important;
+  }
+  .reveal-media {
+    clip-path: none;
+    transition: none;
+  }
+  .link-sweep {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
