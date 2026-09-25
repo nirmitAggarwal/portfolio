@@ -8,6 +8,7 @@ export const site = {
   email: "nirmitjee@gmail.com",
   phone: "+91 98911 68827",
   phoneHref: "tel:+919891168827",
+  whatsappHref: "https://wa.me/919891168827",
   github: "https://github.com/nirmitAggarwal",
   githubHandle: "nirmitAggarwal",
   linkedin: "https://linkedin.com/in/nirmit-aggarwal",

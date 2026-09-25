@@ -86,21 +86,21 @@
   --duration-base: 420ms;
 }
 
-/* Dark mode: warm dark paper, not pure black. Same hue family as light mode.
+/* Dark mode: near-black warm paper with a vibrant orange accent.
    Toggled via `.dark` on <html> (see lib/theme.ts + inline init in index.html). */
 .dark {
-  --background: #161514;
+  --background: #0e0d0c;
   --foreground: #ece8e2;
-  --muted: #1f1d1b;
-  --muted-foreground: #9b958d;
-  --primary: #ff6a45;
+  --muted: #141210;
+  --muted-foreground: #a09a91;
+  --primary: #ff5c1a;
   --primary-foreground: #1a0d08;
-  --accent: #ff6a45;
-  --accent-soft: #33201a;
-  --border: #2b2825;
-  --border-strong: #3a3632;
-  --surface: #1c1a18;
-  --surface-warm: #201d1a;
+  --accent: #ff5c1a;
+  --accent-soft: #3d2012;
+  --border: #262220;
+  --border-strong: #35302a;
+  --surface: #161412;
+  --surface-warm: #1a1714;
   --ink-soft: #c4beb5;
 }
 

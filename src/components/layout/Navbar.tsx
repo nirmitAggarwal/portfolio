@@ -142,9 +142,13 @@ export function Navbar() {
             )}
           </button>
 
-          {/* Call — the prominent action (hidden on mobile, lives in the sheet) */}
+          {/* Call — the prominent action, opens WhatsApp (hidden on mobile, lives in the sheet) */}
           <a
-            href={site.phoneHref}
+            href={site.whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Call via WhatsApp"
+            title="Call via WhatsApp"
             className="ml-1 hidden h-11 items-center gap-2 rounded-lg bg-primary px-4 text-[0.9375rem] font-bold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 sm:flex sm:h-12 sm:px-5"
           >
             <Phone className="size-4" aria-hidden />
@@ -190,7 +194,9 @@ export function Navbar() {
           LinkedIn
         </a>
         <a
-          href={site.phoneHref}
+          href={site.whatsappHref}
+          target="_blank"
+          rel="noreferrer"
           className="flex items-center justify-between rounded-lg px-4 py-3.5 text-[0.9375rem] font-bold text-primary hover:bg-muted"
         >
           Call
