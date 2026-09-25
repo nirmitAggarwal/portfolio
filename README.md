@@ -22,6 +22,10 @@ node scripts/generate-favicon.mjs
 
 All content lives in `src/data/`:
 
+> **Publishing an article?** Read [`docs/BLOG.md`](docs/BLOG.md) — the full
+> guide: create `src/data/posts/<slug>.md` with frontmatter, write Markdown,
+> done. Code blocks, math, tables, image captions, drafts — all covered.
+
 | File | What it controls |
 |---|---|
 | `site.ts` | Name, links, email, résumé path, college |
@@ -31,7 +35,8 @@ All content lives in `src/data/`:
 | `skills.ts` | Toolbox groups |
 | `openSource.ts` | Open-source contributions |
 | `now.ts` | "Now" section (building / learning / exploring) |
-| `writing.ts` | Writing list (sample posts are marked) |
+| `writing.ts` | Derives the Writing list from markdown posts — see `docs/BLOG.md` |
+| `posts/*.md` | **The blog.** One markdown file = one article (frontmatter + body) |
 | `hackathons.ts` | Build log — empty shows the "coming soon" state |
 | `testimonials.ts` | Empty shows the "collecting" state |
 

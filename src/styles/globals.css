@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Syntax highlighting theme (github-dark) for article code blocks — must come
+   after Tailwind so its rules can be overridden by .article-codeblock styles. */
+@import "highlight.js/styles/github-dark.css";
+
 /* ----------------------------------------------------------------------------
    FONTS
    - Recoleta      → expressive display serif (large headings, editorial moments)
@@ -133,6 +137,14 @@ html {
   background-color: var(--background);
 }
 
+/*standard ligatures disabled site-wide (remove this block to
+   restore). Covers both the high-level property and the low-level feature
+   settings so every engine honors it. KaTeX overrides it for its own fonts. */
+html {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "clig" 0;
+}
+
 body {
   background-color: transparent;
   color: var(--foreground);
@@ -243,6 +255,250 @@ body::before {
 
 @utility text-balance {
   text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------------------
+   ARTICLE PROSE — fixed formatting for blog article pages
+---------------------------------------------------------------------------- */
+.article-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.article-prose > * + * {
+  margin-top: 1.25em;
+}
+
+.article-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  text-wrap: balance;
+  margin-top: 2.5em;
+}
+
+.article-prose h3 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin-top: 2em;
+}
+
+.article-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.5rem;
+}
+
+.article-prose ul {
+  list-style: disc;
+}
+
+.article-prose ol {
+  list-style: decimal;
+}
+
+.article-prose li::marker {
+  color: var(--primary);
+}
+
+.article-prose li + li {
+  margin-top: 0.4em;
+}
+
+/* GFM task lists — checkbox rows */
+.article-prose .contains-task-list {
+  list-style: none;
+  padding-left: 0.25rem;
+}
+
+.article-prose .task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.article-prose .task-list-item input {
+  margin-top: 0.45em;
+  accent-color: var(--primary);
+}
+
+.article-prose blockquote {
+  border-left: 2px solid var(--primary);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.article-prose blockquote p {
+  margin-top: 0;
+}
+
+.article-prose hr {
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  margin: 3em 0;
+}
+
+/* Inline code (block code is styled via .article-codeblock) */
+.article-prose code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.12em 0.4em;
+  white-space: nowrap;
+}
+
+/* Math — inline and display (KaTeX) */
+.article-prose .katex {
+  font-size: 1.05em;
+}
+
+.article-prose .katex-display {
+  margin: 2rem 0;
+  padding: 0.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Tables — wrapped for horizontal scroll on narrow screens */
+.article-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.article-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.article-prose th {
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  text-align: left;
+}
+
+.article-prose th,
+.article-prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-prose tbody tr:nth-child(even) {
+  background: var(--surface-warm);
+}
+
+.article-prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Figures — images inside articles (and the cover) */
+.article-figure {
+  margin: 2.5rem 0;
+}
+
+.article-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface-warm);
+}
+
+/* Cover: guaranteed horizontal banner crop */
+.article-cover img {
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+}
+
+.article-figure figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+
+/* ----------------------------------------------------------------------------
+   CODE BLOCKS — GPT-style: dark card, language label, copy button
+   (dark in BOTH themes so syntax colors stay readable)
+---------------------------------------------------------------------------- */
+.article-codeblock {
+  margin: 2rem 0;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0d1117;
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.5);
+}
+
+.article-codeblock-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.article-codeblock-lang {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b949e;
+}
+
+.article-codeblock-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: #8b949e;
+  transition: color 200ms ease;
+}
+
+.article-codeblock-copy:hover {
+  color: #e6edf3;
+}
+
+.article-codeblock pre {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+}
+
+.article-codeblock pre code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* highlight.js paints the background itself; keep it transparent inside the card */
+.article-codeblock .hljs {
+  background: transparent;
+  padding: 0;
 }
 
 /* ----------------------------------------------------------------------------

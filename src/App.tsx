@@ -13,15 +13,24 @@ import { Hackathons } from "@/components/hackathons/Hackathons";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { GitHubSection } from "@/components/github/GitHubSection";
 import { Contact } from "@/components/contact/Contact";
+import { BlogIndexPage } from "@/components/blog/BlogIndexPage";
+import { BlogPostPage } from "@/components/blog/BlogPostPage";
 import { useReveal } from "@/lib/useReveal";
 import { initTheme } from "@/lib/theme";
+import { useRoute } from "@/lib/router";
 import { useEffect } from "react";
 
 export default function App() {
+  const route = useRoute();
+  const isBlog = route.name !== "home";
+
   useReveal();
   useEffect(() => {
     initTheme();
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route.name, route.name === "blogPost" ? route.slug : ""]);
 
   return (
     <>
@@ -34,23 +43,37 @@ export default function App() {
 
       <Navbar />
 
-      <main>
-        <Hero />
-        <BuildingPhases />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <OpenSource />
-        <Now />
-        <Writing />
-        <Hackathons />
-        <Testimonials />
-        <GitHubSection />
-        <Contact />
-      </main>
+      {route.name === "home" && (
+        <main>
+          <Hero />
+          <BuildingPhases />
+          <About />
+          <Experience />
+          <Projects />
+          <Skills />
+          <OpenSource />
+          <Now />
+          <Writing />
+          <Hackathons />
+          <Testimonials />
+          <GitHubSection />
+          <Contact />
+        </main>
+      )}
 
-      <Footer />
+      {route.name === "blogIndex" && (
+        <main>
+          <BlogIndexPage />
+        </main>
+      )}
+
+      {route.name === "blogPost" && (
+        <main>
+          <BlogPostPage slug={route.slug} />
+        </main>
+      )}
+
+      {!isBlog && <Footer />}
     </>
   );
 }

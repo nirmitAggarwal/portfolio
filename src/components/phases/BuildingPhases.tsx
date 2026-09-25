@@ -9,8 +9,8 @@ export function BuildingPhases() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <Section className="relative">
-      <SectionHeading>Building Phases</SectionHeading>
+    <Section id="phases" index="01" label="Building Phases">
+      <SectionHeading id="phases-heading">Building Phases</SectionHeading>
 
       <div
         className="relative mt-10 w-full overflow-hidden rounded-2xl border border-border bg-black"

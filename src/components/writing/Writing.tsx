@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { writingPosts } from "@/data/writing";
+import { blogHref, blogIndexHref } from "@/lib/router";
 
 /**
  * Writing — editorial list of posts. Sample posts are marked in the data
@@ -17,8 +18,8 @@ export function Writing() {
           className="reveal max-w-[36ch] text-sm leading-relaxed text-muted-foreground"
           style={{ "--reveal-delay": 1 } as React.CSSProperties}
         >
-          Engineering notes and project post-mortems. First real articles are
-          in progress — these are the ones taking shape.
+          Engineering notes and project post-mortems, published straight from
+          markdown. Click through to read — every article opens as its own page.
         </p>
       </div>
 
@@ -26,9 +27,7 @@ export function Writing() {
         {writingPosts.map((post, i) => (
           <li key={post.slug}>
             <a
-              href={`#${post.slug}`}
-              onClick={(e) => e.preventDefault()}
-              aria-disabled="true"
+              href={blogHref(post.slug)}
               className="reveal group grid gap-2 border-b border-border py-6 transition-colors md:grid-cols-12 md:items-baseline md:gap-8 md:py-7"
               style={{ "--reveal-delay": Math.min(i, 3) } as React.CSSProperties}
             >
@@ -40,9 +39,6 @@ export function Writing() {
 
               <h3 className="font-display text-xl leading-snug transition-colors group-hover:text-primary md:col-span-6 md:text-[1.375rem]">
                 {post.title}
-                <span className="ml-2 align-middle font-mono text-[0.625rem] font-normal text-muted-foreground/60">
-                  (demo)
-                </span>
               </h3>
 
               <div className="flex items-center justify-between gap-4 md:col-span-3 md:justify-end">
@@ -68,6 +64,19 @@ export function Writing() {
           </li>
         ))}
       </ol>
+
+      <div className="mt-8 flex justify-end">
+        <a
+          href={blogIndexHref}
+          className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+        >
+          All writing
+          <ArrowUpRight
+            className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden
+          />
+        </a>
+      </div>
     </Section>
   );
 }
