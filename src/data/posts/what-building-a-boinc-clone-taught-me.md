@@ -4,7 +4,7 @@ category: "Projects"
 date: "2026-08-14"
 readingTime: "6 min"
 excerpt: "Volunteer nodes vanish mid-task. Networks partition. Disks fill. Designing a distributed system for machines you don't control means designing for failure first — here's what that looked like in practice."
-cover: /images/volunteer-cloud-artwork.png
+cover: /images/volunteer-cloud-artwork.webp
 coverAlt: "Artwork of a volunteer cloud — many small machines contributing to one computation"
 ---
 

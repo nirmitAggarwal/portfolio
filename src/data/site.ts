@@ -1,4 +1,7 @@
 export const site = {
+  /** Production origin — canonical URL, sitemap, OG tags. Keep in sync with
+   *  index.html <link rel=canonical> until meta tags move client-side. */
+  url: "https://theboringedit.in",
   name: "Nirmit Aggarwal",
   shortName: "Nirmit",
   role: "Software Engineer in Progress",

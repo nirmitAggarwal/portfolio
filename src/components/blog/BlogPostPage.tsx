@@ -4,6 +4,7 @@ import {
   Markdown,
   formatDate,
 } from "@/components/blog/Markdown";
+import { NotFound } from "@/components/ui/NotFound";
 import { publishedPosts, getPost, type Post } from "@/data/posts";
 import { blogIndexHref } from "@/lib/router";
 import { site } from "@/data/site";
@@ -20,20 +21,7 @@ export function BlogPostPage({ slug }: { slug: string }) {
   const post = getPost(slug);
 
   if (!post) {
-    return (
-      <article className="mx-auto w-full max-w-3xl px-6 pb-32 pt-40 md:px-10">
-        <p className="font-label text-[0.6875rem] text-primary">404</p>
-        <h1 className="mt-6 font-display text-3xl sm:text-4xl">
-          This article doesn't exist (yet).
-        </h1>
-        <p className="mt-4 text-muted-foreground">
-          It may be a draft, or the link is wrong.{" "}
-          <a href={blogIndexHref} className="link-sweep text-foreground">
-            Browse all writing →
-          </a>
-        </p>
-      </article>
-    );
+    return <NotFound attemptedPath={`#/blog/${slug}`} />;
   }
 
   // Drafts render with a banner — previewable via direct URL, but hidden

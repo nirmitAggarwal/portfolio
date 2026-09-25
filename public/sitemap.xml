@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Blog posts use hash routes (#/blog/…), which crawlers cannot index as
+     separate URLs — the homepage is the only indexable URL until the site
+     moves to path-based routing. See README "SEO". -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://theboringedit.in/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

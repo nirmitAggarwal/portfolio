@@ -45,7 +45,7 @@ $$
 
 130 ms best case — and 4 seconds when a handshake SYN or TLS ClientHello is lost and TCP retries on an exponential timer. The smoking gun in the capture: `SYN → no reply → SYN (retransmit, 1 s backoff) → SYN-ACK`. There's the 4-second outlier, explained in one screenshot of a time sequence.
 
-![The debugging setup: capture on the client, correlate with server logs by timestamp](/images/GitGame.png)
+![The debugging setup: capture on the client, correlate with server logs by timestamp](/images/GitGame.webp)
 *Fig. 1 — Correlating client-side captures with server logs was how we confirmed the retransmits, not the server, were the stall.*
 
 ## The two-line fix

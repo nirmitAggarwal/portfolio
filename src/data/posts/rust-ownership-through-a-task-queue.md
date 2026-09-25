@@ -4,7 +4,7 @@ category: "Rust"
 date: "2026-07-02"
 readingTime: "8 min"
 excerpt: "The borrow checker finally clicked for me when I stopped fighting it and started designing ownership into a work-queue's API. A walkthrough of the reasoning, one compile error at a time."
-cover: /images/3-phases-of-building-artwork.png
+cover: /images/3-phases-of-building-artwork.webp
 coverAlt: "Artwork showing the three phases of building something"
 ---
 

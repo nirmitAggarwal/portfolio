@@ -12,11 +12,36 @@ npm run build      # typecheck + production build (dist/)
 npm run preview    # serve the production build locally
 ```
 
-Image pipeline (regenerates `public/images/` from `resources/`):
+Image pipeline (regenerates `public/images/` from `resources/` — favicon,
+PWA icons, WebP avatars/artworks and the 1200×630 `og-image.jpg`):
 
 ```bash
 node scripts/generate-favicon.mjs
 ```
+
+Source images live in `resources/images/` (`avatars/`, `artworks/`); nothing
+heavy ships in `public/` — only optimized WebP/PNG/JPG output.
+
+## SEO
+
+- **Canonical URL** — `https://theboringedit.in`, set in `index.html`
+  (`<link rel="canonical">`, Open Graph, Twitter) and as `site.url` in
+  `src/data/site.ts`. Keep the two in sync when changing domains.
+- **Crawlers** — `public/robots.txt` allows everything and points to the sitemap.
+- **Sitemap** — `public/sitemap.xml`. Blog posts are hash-routed (`#/blog/…`),
+  so only the homepage is a separate indexable URL; switch to path-based
+  routing if per-article SEO matters later.
+- **Structured data** — JSON-LD `Person` schema in `index.html` (sameAs links
+  to GitHub/LinkedIn).
+- **Social sharing** — `public/images/og-image.jpg` (regenerate via the script
+  above after changing the card design in `scripts/generate-favicon.mjs`).
+- **Tab titles** — per-route via `src/lib/useDocumentTitle.ts`.
+
+## Deploying
+
+Any static host works (Vercel, Netlify, GitHub Pages, Cloudflare Pages):
+upload `dist/` after `npm run build`. Point the `theboringedit.in` DNS at the
+host and make sure HTTPS is on — canonical/OG URLs assume it.
 
 ## Editing content (no UI changes needed)
 

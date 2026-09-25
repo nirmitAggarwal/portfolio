@@ -3,13 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nirmit Aggarwal — Software Engineer in Progress</title>
     <meta
       name="description"
       content="Nirmit Aggarwal — software engineer in progress. I build software to understand how things work: distributed systems, Rust, backend infrastructure."
     />
-    <meta name="theme-color" content="#fefefe" />
-    <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <title>Nirmit Aggarwal — Software Engineer in Progress</title>
+    <meta name="author" content="Nirmit Aggarwal" />
+    <meta
+      name="keywords"
+      content="Nirmit Aggarwal, software engineer, Rust, distributed systems, backend, portfolio"
+    />
+
+    <!-- Canonical URL — single source of truth: src/data/site.ts → site.url -->
+    <link rel="canonical" href="https://theboringedit.in/" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#fefefe" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e0d0c" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph (Facebook, LinkedIn, Discord, Slack, WhatsApp…) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nirmit Aggarwal" />
+    <meta property="og:url" content="https://theboringedit.in/" />
+    <meta property="og:title" content="Nirmit Aggarwal — Software Engineer in Progress" />
+    <meta
+      property="og:description"
+      content="I build software to understand how things work: distributed systems, Rust, backend infrastructure."
+    />
+    <meta property="og:image" content="https://theboringedit.in/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Nirmit Aggarwal — Software Engineer in Progress"
+    />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nirmit Aggarwal — Software Engineer in Progress" />
+    <meta
+      name="twitter:description"
+      content="I build software to understand how things work: distributed systems, Rust, backend infrastructure."
+    />
+    <meta name="twitter:image" content="https://theboringedit.in/images/og-image.jpg" />
+
+    <!-- Icons + PWA -->
+    <link rel="icon" type="image/png" href="/images/favicon.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/images/icons/icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Nirmit Aggarwal",
+        "url": "https://theboringedit.in/",
+        "image": "https://theboringedit.in/images/avatar-headphone-on.webp",
+        "jobTitle": "Software Engineer in Progress",
+        "description": "B.Tech Information Technology student at Maharaja Surajmal Institute of Technology, learning aggressively and building seriously — distributed systems, Rust, backend infrastructure.",
+        "email": "mailto:nirmitjee@gmail.com",
+        "telephone": "+91 98911 68827",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "New Delhi",
+          "addressCountry": "IN"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Maharaja Surajmal Institute of Technology"
+        },
+        "knowsAbout": [
+          "Rust",
+          "Distributed Systems",
+          "Backend Infrastructure",
+          "React",
+          "TypeScript"
+        ],
+        "sameAs": [
+          "https://github.com/nirmitAggarwal",
+          "https://linkedin.com/in/nirmit-aggarwal"
+        ]
+      }
+    </script>
+
     <script>
       // Set theme before paint to avoid a flash of the wrong scheme.
       // Default is LIGHT; dark only applies when explicitly stored.

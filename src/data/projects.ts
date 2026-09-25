@@ -33,7 +33,7 @@ export const projects: Project[] = [
       "Ed25519",
       "SHA-256",
     ],
-    image: "/images/volunteer-cloud-artwork.png",
+    image: "/images/volunteer-cloud-artwork.webp",
     imageAlt:
       "Illustration of a dimly lit hack room with monitors glowing — machines working together late at night",
     github: "https://github.com/nirmitAggarwal/volunteer_cloud",
@@ -48,7 +48,7 @@ export const projects: Project[] = [
     status: "Shipped",
     technologies: ["React", "Express.js", "MongoDB", "GitHub OAuth", "JWT"],
     github: "https://github.com/IEEE-MSIT/student_toolkit",
-    image: "/images/Student-toolkit.png",
+    image: "/images/Student-toolkit.webp",
     featured: true,
   },
   {
@@ -64,7 +64,7 @@ export const projects: Project[] = [
       "Git",
       "GitHub",
     ],
-    image: "/images/GitGame.png",
+    image: "/images/GitGame.webp",
     imageAlt:
       "A stylized developer workspace showing Git branches, commits, and terminal commands",
     github: "https://github.com/nirmitAggarwal/the-git-project",

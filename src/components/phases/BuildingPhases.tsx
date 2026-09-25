@@ -3,7 +3,7 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { phases } from "@/data/phases";
 import { cn } from "@/lib/utils";
 
-const IMAGE_SRC = "/images/3-phases-of-building-artwork.png";
+const IMAGE_SRC = "/images/3-phases-of-building-artwork.webp";
 
 export function BuildingPhases() {
   const [active, setActive] = useState<number | null>(null);
