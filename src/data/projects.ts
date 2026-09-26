@@ -49,6 +49,8 @@ export const projects: Project[] = [
     technologies: ["React", "Express.js", "MongoDB", "GitHub OAuth", "JWT"],
     github: "https://github.com/IEEE-MSIT/student_toolkit",
     image: "/images/Student-toolkit.webp",
+    imageAlt:
+      "Illustration of a student productivity platform — documents and everyday study tools on screen",
     featured: true,
   },
   {

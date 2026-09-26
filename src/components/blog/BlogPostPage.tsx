@@ -75,7 +75,13 @@ function PostView({ post }: { post: Post }) {
 
       {post.cover && (
         <figure className="article-cover article-figure mt-10">
-          <img src={post.cover} alt={post.coverAlt ?? ""} loading="eager" />
+          <img
+            src={post.cover}
+            alt={post.coverAlt ?? ""}
+            width={1600}
+            height={640}
+            loading="eager"
+          />
           {post.coverAlt && <figcaption>{post.coverAlt}</figcaption>}
         </figure>
       )}

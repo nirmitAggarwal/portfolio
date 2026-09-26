@@ -26,6 +26,8 @@ export function BuildingPhases() {
           <img
             src={IMAGE_SRC}
             alt="Three phases of building"
+            width={1600}
+            height={900}
             className="absolute inset-0 h-full w-full object-cover grayscale"
           />
 

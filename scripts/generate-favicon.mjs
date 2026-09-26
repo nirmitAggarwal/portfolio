@@ -1,6 +1,6 @@
 /**
  * Generates all public/ images from resources/ originals:
- *   - favicon + apple-touch-icon + PWA icons (192/512)
+ *   - favicon.ico (multi-size, from the headphone-on avatar) + apple-touch-icon + PWA icons (192/512)
  *   - avatar WebP set (hero + navbar)
  *   - artwork WebP set (phases + project covers + blog covers)
  *   - og-image.jpg (1200×630 social share card)
@@ -8,7 +8,7 @@
  * Run with: node scripts/generate-favicon.mjs
  */
 import sharp from "sharp";
-import { mkdir, rm } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const AVATARS = "resources/images/avatars";
@@ -28,18 +28,56 @@ await rm(path.join(OUT, "3-phases-of-building-artwork.png"), { force: true });
 await rm(path.join(OUT, "volunteer-cloud-artwork.png"), { force: true });
 await rm(path.join(OUT, "Student-toolkit.png"), { force: true });
 await rm(path.join(OUT, "GitGame.png"), { force: true });
+await rm(path.join(OUT, "favicon.png"), { force: true });
 
-// --- Favicon + PWA icons: square-crop the working avatar ---------------------
-const iconSizes = [64, 180, 192, 512];
+// --- Favicon.ico: multi-size icon from the headphone-on avatar ---------------
+// Pixel art: nearest-neighbor keeps edges crisp when downscaling hard.
+const icoSizes = [16, 32, 48, 64, 256];
+const icoFrames = await Promise.all(
+  icoSizes.map((size) =>
+    sharp(path.join(AVATARS, "avatar-headphone-on.png"))
+      .resize(size, size, {
+        fit: "cover",
+        position: "attention",
+        kernel: "nearest",
+      })
+      .png()
+      .toBuffer()
+  )
+);
+
+// Wrap the PNG frames in a minimal ICO container (PNG-compressed entries).
+const icoHeader = Buffer.alloc(6);
+icoHeader.writeUInt16LE(0, 0); // reserved
+icoHeader.writeUInt16LE(1, 2); // type: icon
+icoHeader.writeUInt16LE(icoSizes.length, 4); // image count
+
+let icoOffset = 6 + 16 * icoSizes.length;
+const icoEntries = icoFrames.map((frame, i) => {
+  const size = icoSizes[i];
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(size === 256 ? 0 : size, 0); // width (0 = 256)
+  entry.writeUInt8(size === 256 ? 0 : size, 1); // height (0 = 256)
+  entry.writeUInt16LE(1, 4); // color planes
+  entry.writeUInt16LE(32, 6); // bits per pixel
+  entry.writeUInt32LE(frame.length, 8); // data size
+  entry.writeUInt32LE(icoOffset, 12); // data offset
+  icoOffset += frame.length;
+  return entry;
+});
+
+await writeFile(
+  path.join("public", "favicon.ico"),
+  Buffer.concat([icoHeader, ...icoEntries, ...icoFrames])
+);
+
+// --- Apple-touch + PWA icons: square-crop the headphone-on avatar ------------
+const iconSizes = [180, 192, 512];
 for (const size of iconSizes) {
-  await sharp(path.join(AVATARS, "avatar-working.png"))
+  await sharp(path.join(AVATARS, "avatar-headphone-on.png"))
     .resize(size, size, { fit: "cover", position: "attention" })
     .png({ quality: 90, palette: true })
-    .toFile(
-      size === 64
-        ? path.join(OUT, "favicon.png")
-        : path.join(OUT, "icons", `icon-${size}.png`)
-    );
+    .toFile(path.join(OUT, "icons", `icon-${size}.png`));
 }
 
 // --- Hero avatars: 720px WebP (displayed at <=360px, retina-safe) -----------
